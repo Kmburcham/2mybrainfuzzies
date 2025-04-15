@@ -35,7 +35,7 @@ def variance(x):
     0.0
     
     """
-    def variance(x):
+    # def variance(x):
     n = len(x)
     mean_x = sum(x) / n
     return sum((xi - mean_x) ** 2 for xi in x) / (n - 1)
@@ -47,12 +47,12 @@ print(variance([10, 12, 23, 23, 16, 23, 21, 16]))  # Expected: ~22.41
 print(variance([100, 100, 100]))  # Expected: 0.0
 
 
-    n = 7 # Modify this line.
-    x_bar = 8 # Modify this line.
+    # n = 7 # Modify this line.
+    # x_bar = 8 # Modify this line.
     
-    var = 9 # Modify this line.
+    # var = 9 # Modify this line.
     
-    return var
+    # return var
 
 
 ##################################################
@@ -77,7 +77,7 @@ def covariance(y, x):
     
     """
     # b) Sample covariance
-def covariance(y, x):
+    # def covariance(y, x):
     n = len(x)
     mean_x = sum(x) / n
     mean_y = sum(y) / n
@@ -89,13 +89,13 @@ print(covariance([1, 2, 3], [1, 2, 3]))  # Expected: 1.0
 print(covariance([1, 5, 7], [2, 6, 8]))  # Expected: 7.0
 print(covariance([1, 2, 3], [3, 2, 1]))  # Expected: -1.0
 
-    n = 7 # Modify this line.
-    x_bar = 8 # Modify this line.
-    y_bar = 8 # Modify this line.
+    # n = 7 # Modify this line.
+    # x_bar = 8 # Modify this line.
+    # y_bar = 8 # Modify this line.
     
-    covar = 9 # Modify this line.
+    # covar = 9 # Modify this line.
     
-    return covar
+    # return covar
 
 
 
@@ -122,7 +122,7 @@ def ols_slope(y, x):
     
     
     """
-    def ols_slope(y, x):
+    # def ols_slope(y, x):
     return covariance(y, x) / variance(x)
 
 # Examples for ols_slope
@@ -131,12 +131,12 @@ print(ols_slope([1, 2, 3], [1, 2, 3]))  # Expected: 1.0
 print(ols_slope([2, 4, 6], [1, 2, 3]))  # Expected: 2.0
 print(ols_slope([3, 3, 3], [1, 2, 3]))  # Expected: 0.0
     
-    covar = 7 # Modify this line.
-    var = 8 # Modify this line.
+    # covar = 7 # Modify this line.
+    # var = 8 # Modify this line.
     
-    slope = 9 # Modify this line.
+    # slope = 9 # Modify this line.
     
-    return slope
+    # return slope
 
 
 ##################################################
@@ -162,7 +162,7 @@ def ols_intercept(y, x, beta_1_hat):
     
     
     """
-    def ols_intercept(y, x, beta_1_hat):
+    # def ols_intercept(y, x, beta_1_hat):
     mean_y = sum(y) / len(y)
     mean_x = sum(x) / len(x)
     return mean_y - beta_1_hat * mean_x
@@ -173,12 +173,12 @@ print(ols_intercept([1, 2, 3], [1, 2, 3], 1.0))  # Expected: 0.0
 print(ols_intercept([2, 4, 6], [1, 2, 3], 2.0))  # Expected: 0.0
 print(ols_intercept([3, 3, 3], [1, 2, 3], 0.0))  # Expected: 3.0
     
-    n = 7 # Modify this line.
-    x_bar = 8 # Modify this line.
-    y_bar = 9 # Modify this line.
+    # n = 7 # Modify this line.
+    # x_bar = 8 # Modify this line.
+    # y_bar = 9 # Modify this line.
     
-    intercept = 10 # Modify this line.
-    return intercept
+    # intercept = 10 # Modify this line.
+    # return intercept
     
 
 ##################################################
@@ -201,7 +201,7 @@ def ssr(y, x, beta_0, beta_1):
     0.0
 
     """
-    def ssr(y, x, beta_0, beta_1):
+    # def ssr(y, x, beta_0, beta_1):
     return sum((yi - beta_0 - beta_1 * xi) ** 2 for xi, yi in zip(x, y))
 
 # Examples for ssr
@@ -210,10 +210,10 @@ print(ssr([1, 2, 3], [1, 2, 3], 0, 1))  # Expected: 0.0
 print(ssr([2, 4, 6], [1, 2, 3], 0, 2))  # Expected: 0.0
 print(ssr([1, 2, 1], [1, 2, 3], 0, 1))  # Expected: > 0
     
-    ssr = 7 # Modify this line.
-    ssr = 8 # Modify this line.
+    # ssr = 7 # Modify this line.
+    # ssr = 8 # Modify this line.
     
-    return ssr
+    # return ssr
 
 
 
