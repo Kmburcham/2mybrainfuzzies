@@ -81,7 +81,7 @@ os.getcwd()
 # to interact with the database
 # We will continue using sqlite3
 import sqlite3 as dbapi
-con = dbapi.connect('population_USA_1.db')
+con = dbapi.connect('population_USA.db')
  
  
 # b. Make a database table called Density that will 
