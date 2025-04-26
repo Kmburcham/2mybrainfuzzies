@@ -1,0 +1,5 @@
+C:\Users\MORIL027\Documents\GitHub\QMB6315S25_Grading\2mybrainfuzzies\assignment_03
+Traceback (most recent call last):
+  File "C:\Users\MORIL027\Documents\GitHub\QMB6315S25_Grading\2mybrainfuzzies\assignment_03\my_A3_queries.py", line 94, in <module>
+    cur.execute('''CREATE TABLE Density(State TEXT,
+sqlite3.OperationalError: table Density already exists
