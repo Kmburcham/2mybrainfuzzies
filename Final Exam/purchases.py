@@ -4,15 +4,13 @@
 #
 # QMB 6315: Python for Business Analytics
 #
-# Name:
+# Name: [Kaylei Burcham]
 #
-# Date:
+# Date: [4/29/2025]
 #
 ##################################################
 #
-# Sample Script for Final Examination:
-# Obtaining Data from a Database
-# and Building Predictive Models
+# Final Examination: Data Handling and Predictive Modeling
 #
 ##################################################
 """
@@ -21,36 +19,35 @@
 # Import Required Modules
 ##################################################
 
-
-
-
-
+import sqlite3
+import pandas as pd
+import statsmodels.formula.api as sm
+import math
+import os
 
 ##################################################
 # Set up Workspace
 ##################################################
 
-
-
-
-
-
+# Set working directory to where the customers.db file is located
+os.chdir(r"C:\Users\Kaylei Burcham\Desktop\2mybrainfuzzies\2mybrainfuzzies\Final Exam")
+ 
+# Check the current working directory
+print("Current Working Directory:", os.getcwd())
 
 ##################################################
 # Question 1: Connect to a Database
 #     and Obtain Applications Data
 ##################################################
 
-
 #--------------------------------------------------
 # a. Connect to the database called customers.db
 #     and obtain a cursor object.
 #--------------------------------------------------
 
-
-con = None # Code goes here
-
-cur = None # Code goes here
+# Connect to the database called customers.db and obtain a cursor object
+con = sqlite3.connect("customers.db")
+cur = con.cursor()
 
 
 #--------------------------------------------------
@@ -59,10 +56,9 @@ cur = None # Code goes here
 #--------------------------------------------------
 
 query_1 = """
-            QUERY 
-                GOES
-            HERE
-            """
+SELECT income, homeownership, purchases, credit_limit
+FROM Applications
+"""
 print(query_1)
 cur.execute(query_1)
 
@@ -71,40 +67,30 @@ cur.execute(query_1)
 #     results into a dataframe.
 #--------------------------------------------------
 
-# Code goes here
-purchase_app = None 
-
-# Could use a loop with a pd.concat() command.
-
+purchase_app = pd.DataFrame(cur.fetchall(), columns=[i[0] for i in cur.description])
 
 # Describe the contents of the dataframe to check the result.
+
 purchase_app.describe()
-
 purchase_app.columns
-
-
+print(purchase_app.describe())
+print(purchase_app.columns)
 
 #--------------------------------------------------
 # Fit a regression model to check progress.
 #--------------------------------------------------
 
-reg_model_app = sm.ols(formula = 
-                           "model formula goes here", 
-                           data = purchase_app).fit()
-
+reg_model_app = sm.ols(
+    formula="purchases ~ income + homeownership + credit_limit",
+    data=purchase_app
+).fit()
 
 # Display a summary table of regression results.
 print(reg_model_app.summary())
 
-
-
-
 ##################################################
 # Question 2: Obtain CreditBureau Data
 ##################################################
-
-
-
 
 #--------------------------------------------------
 # a. Submit a query to the database that obtains
@@ -112,106 +98,81 @@ print(reg_model_app.summary())
 #--------------------------------------------------
 
 query_2 = """
-            QUERY 
-                GOES
-            HERE
-            """
+    SELECT A.income, A.homeownership, A.purchases, A.credit_limit, 
+           B.fico, B.num_late, B.past_def, B.num_bankruptcy
+    FROM Applications A
+    INNER JOIN CreditBureau B
+    ON A.ssn = B.ssn
+"""
 print(query_2)
 cur.execute(query_2)
-
-
-
 
 #--------------------------------------------------
 # b. Create a data frame and load the query
 #     results into a dataframe.
 #--------------------------------------------------
 
-
-
-# Code goes here
-purchase_app_bureau = None 
-
-# Could use a loop with a pd.concat() command.
-
-
+purchase_app_bureau = pd.DataFrame(cur.fetchall(), columns=[desc[0] for desc in cur.description])
 
 # Describe the contents of the dataframe to check the result.
-purchase_app_bureau.describe()
-purchase_app_bureau.columns
-
-
+print(purchase_app_bureau.describe())
+print(purchase_app_bureau.columns)
 
 #--------------------------------------------------
 # Fit another regression model.
 #--------------------------------------------------
 
-reg_model_app_bureau = sm.ols(formula = 
-                           "model formula goes here", 
-                           data = purchase_app_bureau).fit()
-
+reg_model_app_bureau = sm.ols(
+    formula="purchases ~ income + homeownership + credit_limit + fico + num_late + past_def + num_bankruptcy",
+    data=purchase_app_bureau
+).fit()
 
 # Display a summary table of regression results.
 print(reg_model_app_bureau.summary())
-
-
-
 
 ##################################################
 # Question 3: Obtain Demographic Data
 ##################################################
 
-
-
 #--------------------------------------------------
 # a. Submit a query to the database that obtains
-#    the Application data joined with CreditBureau data.
-#    and then joined with the Demographic data.
+#    the Application data joined with CreditBureau data
+#    and Demographic data.
 #--------------------------------------------------
 
 query_3 = """
-            QUERY 
-                GOES
-            HERE
-            """
+    SELECT A.income, A.homeownership, A.purchases, A.credit_limit, 
+           B.fico, B.num_late, B.past_def, B.num_bankruptcy,
+           D.avg_income, D.density
+    FROM Applications A
+    INNER JOIN CreditBureau B
+    ON A.ssn = B.ssn
+    INNER JOIN Demographic D
+    ON A.zip_code = D.zip_code
+"""
 print(query_3)
 cur.execute(query_3)
 
-
-
-
 #--------------------------------------------------
-# b. Create a data frame and load the query.
+# b. Create a data frame and load the query
 #--------------------------------------------------
 
-
-
-# Code goes here
-purchase_full = None 
-
-# Could use a loop with a pd.concat() command.
-
-
-
-# Check to see the columns in the result.
+purchase_full = pd.DataFrame(cur.fetchall(), columns=[i[0] for i in cur.description])
+ 
 purchase_full.describe()
-
 purchase_full.columns
-
 
 #--------------------------------------------------
 # Fit another regression model.
 #--------------------------------------------------
 
-reg_model_full = sm.ols(formula = 
-                           "model formula goes here", 
-                           data = purchase_full).fit()
-
+reg_model_full = sm.ols(
+    formula="purchases ~ income + homeownership + credit_limit + fico + num_late + past_def + num_bankruptcy + avg_income + density",
+    data=purchase_full
+).fit()
 
 # Display a summary table of regression results.
 print(reg_model_full.summary())
-
-
 
 ##################################################
 # Question 4: Advanced Regression Modeling
@@ -221,60 +182,45 @@ print(reg_model_full.summary())
 # Parts a-c with utilization.
 #--------------------------------------------------
 
-
 # Create a variable for credit utilization.
+purchase_full["utilization"] = purchase_full["purchases"] / purchase_full["credit_limit"]
 
-# Code goes here.
+# Check the new variable
+print(purchase_full["utilization"].describe())
 
+# Fit a regression model predicting utilization
+reg_model_util = sm.ols(
+    formula="utilization ~ income + homeownership + fico + num_late + past_def + num_bankruptcy + avg_income + density",
+    data=purchase_full
+).fit()
 
-
-
-#--------------------------------------------------
-# Fit another regression model.
-#--------------------------------------------------
-
-
-# Code goes here.
-
-
-
+print(reg_model_util.summary())
 
 #--------------------------------------------------
-# Parts a-c with log_odds_util.
+# Parts d-f with log_odds_util.
 #--------------------------------------------------
 
+# Create a variable for log odds of utilization
+purchase_full["log_odds_util"] = purchase_full["utilization"].apply(
+    lambda x: math.log(x / (1 - x)) if (x > 0) and (x < 1) else None
+)
 
-# Create a variable for credit utilization.
+# Check the new variable
+print(purchase_full["log_odds_util"].describe())
 
-# Code goes here.
+# Fit a regression model predicting log_odds_util
+reg_model_logodds = sm.ols(
+    formula="log_odds_util ~ income + homeownership + fico + num_late + past_def + num_bankruptcy + avg_income + density",
+    data=purchase_full.dropna(subset=["log_odds_util"])
+).fit()
 
-
-#--------------------------------------------------
-# Fit another regression model.
-#--------------------------------------------------
-
-
-# Code goes here.
-
-
-
-
-
-
-
-
-
+print(reg_model_logodds.summary())
 
 ##################################################
 # Commit changes and close the connection
 ##################################################
 
-
-# The commit method saves the changes. 
-# con.commit()
 # No changes were necessary -- only reading.
-
-# Close the connection when finished. 
 con.close()
 
 # Then we can continue with this file when you have time
