@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "C:\Users\MORIL027\Documents\GitHub\QMB6315S25_Grading\2mybrainfuzzies\final_exam\purchases.py", line 33, in <module>
+    os.chdir(r"C:\Users\Kaylei Burcham\Desktop\2mybrainfuzzies\2mybrainfuzzies\Final Exam")
+FileNotFoundError: [WinError 3] The system cannot find the path specified: 'C:\\Users\\Kaylei Burcham\\Desktop\\2mybrainfuzzies\\2mybrainfuzzies\\Final Exam'
